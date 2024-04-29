@@ -20,10 +20,20 @@ namespace Tourist.Controllers
         }
 
         // GET: Places
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? id)
         {
-            var applicationDbContext = _context.Places.Include(p => p.Region);
-            return View(await applicationDbContext.ToListAsync());
+           
+            
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var placesInRegion = await _context.Places
+                .Where(p => p.RegionID == id)
+                .ToListAsync();
+
+            return View(placesInRegion);
         }
 
         // GET: Places/Details/5
@@ -65,7 +75,7 @@ namespace Tourist.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["RegionID"] = new SelectList(_context.Regions, "ID", "ID", place.RegionID);
+            ViewData["RegionID"] = new SelectList(_context.Regions, "ID", "Name", place.RegionID);
             return View(place);
         }
 
@@ -82,7 +92,7 @@ namespace Tourist.Controllers
             {
                 return NotFound();
             }
-            ViewData["RegionID"] = new SelectList(_context.Regions, "ID", "ID", place.RegionID);
+            ViewData["RegionID"] = new SelectList(_context.Regions, "ID", "Name");
             return View(place);
         }
 
@@ -116,9 +126,9 @@ namespace Tourist.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), "Places", new { id = place.RegionID });
             }
-            ViewData["RegionID"] = new SelectList(_context.Regions, "ID", "ID", place.RegionID);
+            ViewData["RegionID"] = new SelectList(_context.Regions, "ID", "Name", place.RegionID);
             return View(place);
         }
 
@@ -137,7 +147,7 @@ namespace Tourist.Controllers
             {
                 return NotFound();
             }
-
+            ViewData["RegionID"] = new SelectList(_context.Regions, "ID", "Name");
             return View(place);
         }
 

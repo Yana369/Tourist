@@ -1,15 +1,53 @@
+:root {
+    --blue: #275362;
+    --green: #407a61;
+    --lightgreen: #abbd8c;
+    --beige: #ece2dd;
+    --light: #f8f1f4;
+}
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+.create-button {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    
+}
+
+
+body {
+    margin-bottom: 60px;
+    background-color: var(--light);
+    font-family: Arial, sans-serif;
+}
+
 .regions-container {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
+    justify-content: space-around;
 }
 
 .region-item {
-    border: 1px solid #ccc;
+    border: 1px solid var(--green);
     border-radius: 5px;
     padding: 10px;
-    width: calc(33.33% - 20px); /* Ширина кожного квадратика */
+    width: calc(25% - 40px);
     text-align: center;
+    background-color: var(--beige);
+    position: relative;
+    overflow: hidden;
+}
+
+.region-description {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 10px;
 }
 
 .region-photo {
@@ -22,8 +60,17 @@
 .region-item h2 {
     margin-top: 0;
     font-size: 18px;
+    color: var(--blue);
 }
 
 .region-item p {
     margin-bottom: 0;
+    font-size: 14px;
+    color: var(--green);
+}
+
+@media (max-width: 1067px) {
+    .region-item {
+        width: 35%;
+    }
 }
